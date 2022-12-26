@@ -10,7 +10,7 @@ const authSchema = Joi.object({
 const authValidation = async (req, res, next) => {
     const value = authSchema.validate(req.body, { abortEarly: false });
     if (value.error) {
-        return res.send(value.error.details);
+        return res.status(400).json({error: value.error.details});
     } else {
         next();
     }
