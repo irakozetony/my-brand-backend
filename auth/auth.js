@@ -44,7 +44,6 @@ const singupStrategy = new localStrategy(
 
 export const authenticate = (req, res, next) => {
     const authorizationHeader = req.header("Authorization");
-    console.log(req.body);
 
     if (!authorizationHeader) {
         res.status(403).json({error: "Unauthorized request"});

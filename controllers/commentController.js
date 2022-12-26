@@ -20,10 +20,10 @@ export const comment_create = (req, res) => {
             })
             .catch((err) =>
                 res
-                    .status(400)
+                    .status(404)
                     .json({ error: err, message: "Comment not added" })
             );
-    } else return res.status(400).json({ error: "Blog not found" });
+    } else return res.status(404).json({ error: "Blog not found" });
 };
 
 export const comment_list = (req, res) => {
@@ -38,5 +38,5 @@ export const comment_list = (req, res) => {
             }
             res.status(200).json({ comments: comments });
         })
-        .catch((err) => res.status(400).json({ error: err }));
+        .catch((err) => res.status(404).json({ error: err }));
 };

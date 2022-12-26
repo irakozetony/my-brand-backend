@@ -5,16 +5,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --setTimeout=5000 --coverage",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --setTimeout=10000 --coverage --detectOpenHandles --forceExit --runInBand",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "swagger-autogen": "node swagger.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cross-env": "^7.0.3",
+    "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "joi": "^17.7.0",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "jest": "^29.3.1",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "cross-env": "^7.0.3"
   }
 }
