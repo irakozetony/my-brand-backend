@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../index.js";
 import path from "path";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 describe("POST /signup", () => {
     describe("invalid email or invalid password", () => {
@@ -507,3 +508,7 @@ describe("DELETE /messages/:id", () => {
         });
     });
 });
+
+afterAll(async done =>{
+    mongoose.connection.close();
+})

@@ -5,7 +5,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --setTimeout=5000 --coverage",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "swagger-autogen": "node swagger.js"
@@ -32,6 +31,7 @@
   },
   "devDependencies": {
     "jest": "^29.3.1",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "cross-env": "^7.0.3"
   }
 }
