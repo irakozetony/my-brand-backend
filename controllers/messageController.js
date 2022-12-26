@@ -27,15 +27,24 @@ export const message_list = (req, res) => {
 export const message_details = (req, res) => {
     const id = req.params.id;
     Message.findById(id)
-        .then((message) => res.status(200).json({message: message}))
-        .catch((err) => res.status(404).json({ error: err, message: "Message not found" }));
+        .then((message) => {
+            if(!message) return res.status(404).json({error: "Message not found"})
+            return res.status(200).json({ message: message });
+        })
+        .catch((err) =>
+            res.status(404).json({ error: err, message: "Message not found" })
+        );
 };
 
 export const message_delete = (req, res) => {
     const id = req.params.id;
     Message.findByIdAndDelete(id)
         .then((result) =>
-            res.status(200).json({ message: result, message: "Deleted Successfully" })
+            res
+                .status(200)
+                .json({ message: result, message: "Deleted Successfully" })
         )
-        .catch((err) => res.status(404).json({ error: err, message: "Delete failed" }));
+        .catch((err) =>
+            res.status(404).json({ error: err, message: "Delete failed" })
+        );
 };
