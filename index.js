@@ -6,13 +6,11 @@ import blogsRouter from "./routes/blogRoutes.js";
 import messagesRouter from "./routes/messagesRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import { signup } from "./auth/auth.js";
-import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
 import bodyParser from "body-parser";
 
-dotenv.config();
-const PORT = process.env.PORT || 5000;
+
 const loadJSON = (path) =>
     JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
 const swaggerDocument = loadJSON("./swagger.json");
@@ -25,6 +23,7 @@ mongoose
     .then(() => {
         console.log("DB Connected");
     });
+mongoose.set("strictQuery", false);
 app.use(morgan("dev"));
 app.use("/uploads", express.static("uploads"));
 
@@ -40,10 +39,6 @@ app.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json({ error: err });
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;

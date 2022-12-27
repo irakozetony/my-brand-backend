@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.52% </span>
+                <span class="strong">95.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/21</span>
+                <span class='fraction'>20/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/20</span>
+                <span class='fraction'>19/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -109,24 +109,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,60 +134,60 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Comment from "../models/Comments.js";
 import Blog from "../models/Blogs.js";
 &nbsp;
-export const comment_create = <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-    const blogId = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
-    const comment = <span class="cstat-no" title="statement not covered" >new Comment({</span>
+export const comment_create = (req, res) =&gt; {
+    const blogId = req.params.id;
+    const comment = new Comment({
         author: req.body.author,
         message: req.body.message,
         blog_id: blogId,
     });
-    const blog = <span class="cstat-no" title="statement not covered" >Blog.findOne(blogId);</span>
-<span class="cstat-no" title="statement not covered" >    if (blog) {</span>
-<span class="cstat-no" title="statement not covered" >        comment</span>
+    const blog = Blog.findOne(blogId);
+    if (blog) {
+        comment
             .save()
-            .then(<span class="fstat-no" title="function not covered" >as</span>ync (data) =&gt; {
-<span class="cstat-no" title="statement not covered" >                await Blog.findByIdAndUpdate(blogId, {</span>
+            .then(async (data) =&gt; {
+                await Blog.findByIdAndUpdate(blogId, {
                     $push: { comments: data._id },
                 });
-<span class="cstat-no" title="statement not covered" >                return res.status(200).json({ comment: data });</span>
+                return res.status(200).json({ comment: data });
             })
-            .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt;
-<span class="cstat-no" title="statement not covered" >                res</span>
+            .catch((err) =&gt;
+                res
                     .status(404)
                     .json({ error: err, message: "Comment not added" })
             );
-    } else <span class="cstat-no" title="statement not covered" >return res.status(404).json({ error: "Blog not found" });</span>
+    } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>return res.status(404).json({ error: "Blog not found" });</span>
 };
 &nbsp;
-export const comment_list = <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-    const blogId = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
-<span class="cstat-no" title="statement not covered" >    Blog.findOne({ _id: blogId })</span>
-        .then(<span class="fstat-no" title="function not covered" >as</span>ync (blog) =&gt; {
-            const comments = <span class="cstat-no" title="statement not covered" >[];</span>
-            const blogComments = <span class="cstat-no" title="statement not covered" >blog.comments;</span>
-<span class="cstat-no" title="statement not covered" >            for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; blogComments.length; i++) {</span>
-                const blogComment = <span class="cstat-no" title="statement not covered" >await Comment.findById(blogComments[i]);</span>
-<span class="cstat-no" title="statement not covered" >                comments.push(blogComment);</span>
+export const comment_list = (req, res) =&gt; {
+    const blogId = req.params.id;
+    Blog.findOne({ _id: blogId })
+        .then(async (blog) =&gt; {
+            const comments = [];
+            const blogComments = blog.comments;
+            for (let i = 0; i &lt; blogComments.length; i++) {
+                const blogComment = await Comment.findById(blogComments[i]);
+                comments.push(blogComment);
             }
-<span class="cstat-no" title="statement not covered" >            res.status(200).json({ comments: comments });</span>
+            res.status(200).json({ comments: comments });
         })
-        .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; <span class="cstat-no" title="statement not covered" >res.status(404).json({ error: err }))</span>;
+        .catch((err) =&gt; res.status(404).json({ error: err }));
 };
 &nbsp;</pre></td></tr></table></pre>
 
@@ -196,7 +196,7 @@ export const comment_list = <span class="fstat-no" title="function not covered" 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-27T14:47:13.478Z
+                at 2022-12-28T20:50:12.910Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
