@@ -3,7 +3,7 @@ import app from "../index.js";
 import path from "path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-
+import jest from "jest";
 
 describe("POST /signup", () => {
     describe("invalid email or invalid password", () => {

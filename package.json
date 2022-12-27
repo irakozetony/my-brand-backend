@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --setTimeout=10000 --coverage --detectOpenHandles --forceExit --runInBand",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --setTimeout=7000 --coverage --detectOpenHandles --forceExit",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "swagger-autogen": "node swagger.js"
