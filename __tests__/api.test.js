@@ -4,6 +4,7 @@ import User from "../models/Users.js";
 import path from "path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import {response} from "express";
 dotenv.config();
 
 describe("POST /signup", () => {
@@ -64,6 +65,16 @@ describe("POST /login", () => {
             expect(response.body).toHaveProperty("error");
         });
     });
+
+	describe("no email or no password given", ()=>{
+		test("400 status code response", async () =>{
+			const response = await request(app)
+				.post("/api/v1/auth/login")
+				.send({password: "Pass@123"});
+
+			expect(response.statusCode).toBe(400);
+		})
+	})
 });
 
 const blog = {
@@ -193,6 +204,22 @@ describe("PATCH /blog/:id", () => {
             });
         });
     });
+	describe("user with valid authentication and valid data", () => {
+		let blogId = "";
+		beforeEach(async () =>{
+			const response = await request(app).get("/api/v1/blogs/");
+			blogId = response.body.blog_list[0]._id;
+		});
+		test("200 status and blog in response body", async () =>{
+			const response = await request(app)
+				.patch(`/api/v1/blogs/${blogId}`)
+				.set("Authorization", process.env.TESTTOKEN)
+				.field(updateBlog).attach("img", `${baseDir}/test.jpg`);
+
+			expect(response.statusCode).toBe(200);
+			expect(response.body).toHaveProperty("blog");
+		})
+	})
 });
 
 describe("GET /blogs", () => {
@@ -317,7 +344,7 @@ describe("GET /blog/:id/comment", () => {
 
 describe("POST /blog:id/like", () => {
     describe("Wrong blog id", () => {
-        test("400 status code and error message response", async () => {
+        test("404 status code and error message response", async () => {
             const response = await request(app)
                 .post("/api/v1/blogs/7635553832/like")
                 .send();
@@ -344,9 +371,37 @@ describe("POST /blog:id/like", () => {
     });
 });
 
+describe("POST /blog:id/unlike", () =>{
+	describe("Wrong blog id", ()=>{
+		test("400 status code and error message respons", async () =>{
+			const response = await request(app)
+				.post("/api/v1/blogs/87365538/unlike")
+				.send();
+
+			expect(response.statusCode).toBe(404);
+			expect(response.body).toHaveProperty("error");
+		});
+	});
+	describe("Valid blog id", () =>{
+		let blogId = "";
+		beforeEach(async () =>{
+			const response = await request(app).get("/api/v1/blogs");
+			blogId = response.body.blog_list[0]._id;
+		});
+		test("200 status and new likes count", async ()=>{
+			const response = await request(app)
+				.post(`/api/v1/blogs/${blogId}/unlike`)
+				.send();
+
+			expect(response.statusCode).toBe(200);
+			expect(response.body).toHaveProperty("likes");
+		})
+	})
+})
+
 describe("GET /blog:id/like", () => {
     describe("Wrong blog id", () => {
-        test("400 status code and error message response", async () => {
+        test("404 status code and error message response", async () => {
             const response = await request(app).get(
                 "/api/v1/blogs/9377643/like"
             );

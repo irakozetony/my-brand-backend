@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56% </span>
+                <span class="strong">84% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/25</span>
+                <span class='fraction'>21/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/8</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">88.88% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/9</span>
+                <span class='fraction'>8/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56% </span>
+                <span class="strong">84% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/25</span>
+                <span class='fraction'>21/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -144,18 +144,18 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,19 +191,19 @@ export const likes_count = (req, res) =&gt; {
             );
     } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>return res.status(404).json({ error: "Blog not found" });</span>
 };
-export const unlike = <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
-    let blogId = <span class="cstat-no" title="statement not covered" >req.params.id;</span>
-    const blog = <span class="cstat-no" title="statement not covered" >Blog.findOne(blogId);</span>
-<span class="cstat-no" title="statement not covered" >    if (blog) {</span>
-<span class="cstat-no" title="statement not covered" >        if(blog.likes == 0){</span>
+export const unlike = (req, res) =&gt; {
+    let blogId = req.params.id;
+    const blog = Blog.findOne(blogId);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (blog) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if(blog.likes == 0){
 <span class="cstat-no" title="statement not covered" >            return res.status(404).json({error: "Can't unlike"});</span>
         }
-<span class="cstat-no" title="statement not covered" >        Blog.findByIdAndUpdate(blogId, { $inc: { likes: -1 } })</span>
-            .then(<span class="fstat-no" title="function not covered" >(d</span>ata) =&gt;
-<span class="cstat-no" title="statement not covered" >                res.status(200).json({ message: "Like removed", likes: data.likes - 1 })</span>
+        Blog.findByIdAndUpdate(blogId, { $inc: { likes: -1 } })
+            .then((data) =&gt;
+                res.status(200).json({ message: "Like removed", likes: data.likes - 1 })
             )
-            .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt;
-<span class="cstat-no" title="statement not covered" >                res.status(404).json({ error: err, message: "Like not removed" })</span>
+            .catch((err) =&gt;
+                res.status(404).json({ error: err, message: "Like not removed" })
             );
     }
 };
@@ -214,7 +214,7 @@ export const unlike = <span class="fstat-no" title="function not covered" >(r</s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-28T20:50:12.910Z
+                at 2022-12-31T21:24:37.669Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
