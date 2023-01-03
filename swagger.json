@@ -17,10 +17,6 @@
             "description": "Create users and login"
         },
         {
-            "name": "Messaging",
-            "description": "Create, read or delete messages"
-        },
-        {
             "name": "Blog",
             "description": "Create, read, update, delete or get details of a blog"
         },
@@ -31,11 +27,15 @@
         {
             "name": "Likes",
             "description": "Like or unlike a blog"
+        },
+        {
+            "name": "Messaging",
+            "description": "Create, read or delete messages"
         }
     ],
-    "host": "localhost:5000",
     "basePath": "/api/v1",
     "schemes": [
+        "https",
         "http"
     ],
     "paths": {
@@ -343,7 +343,9 @@
             },
             "patch": {
                 "description": "Update blog details",
-                "tags": ["Blog"],
+                "tags": [
+                    "Blog"
+                ],
                 "parameters": [
                     {
                         "name": "Authorization",
@@ -376,21 +378,22 @@
                     }
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "Updated"
                     },
-                    "400":{
+                    "400": {
                         "description": "Bad request"
                     },
-                    "403":{
+                    "403": {
                         "description": "Forbidden"
                     }
                 }
-
             },
             "delete": {
                 "description": "Delete blog",
-                "tags": ["Blog"],
+                "tags": [
+                    "Blog"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -405,13 +408,13 @@
                     }
                 ],
                 "responses": {
-                    "200":{
+                    "200": {
                         "description": "OK"
                     },
-                    "403":{
+                    "403": {
                         "description": "Forbidden"
                     },
-                    "404":{
+                    "404": {
                         "description": "Not Found"
                     }
                 }
@@ -420,7 +423,9 @@
         "/blogs/{id}/comments": {
             "post": {
                 "description": "Add comment to blog",
-                "tags": ["Comments"],
+                "tags": [
+                    "Comments"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -457,7 +462,9 @@
             },
             "get": {
                 "description": "Get all comments for an article",
-                "tags": ["Comments"],
+                "tags": [
+                    "Comments"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -479,7 +486,9 @@
         "/blogs/{id}/like": {
             "post": {
                 "description": "Like blog",
-                "tags": ["Likes"],
+                "tags": [
+                    "Likes"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -499,7 +508,9 @@
             },
             "get": {
                 "description": "",
-                "tags": ["Likes"],
+                "tags": [
+                    "Likes"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -521,7 +532,9 @@
         "/blogs/{id}/unlike": {
             "post": {
                 "description": "Unlike a blog",
-                "tags": ["Likes"],
+                "tags": [
+                    "Likes"
+                ],
                 "parameters": [
                     {
                         "name": "id",

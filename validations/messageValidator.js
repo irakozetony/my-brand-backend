@@ -1,12 +1,12 @@
 import Joi from "joi";
 
 const phonePattern =
-    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+    /^$|^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 const messageSchema = Joi.object({
     first_name: Joi.string().min(2).required(),
     last_name: Joi.string().min(2).required(),
     mail: Joi.string().email().required(),
-    phone: Joi.string().regex(phonePattern).optional(),
+    phone: Joi.string().regex(phonePattern).allow(null, ""),
     message: Joi.string().min(2),
 });
 

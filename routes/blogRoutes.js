@@ -34,7 +34,7 @@ blogsRouter.patch(
     blogValidation,
     blog_update
 );
-blogsRouter.delete("/:id", blog_delete);
+blogsRouter.delete("/:id", authenticate, blog_delete);
 
 blogsRouter.post("/:id/comments", commentValidation, comment_create);
 blogsRouter.get("/:id/comments", comment_list);

@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const blogSchema = Joi.object({
-    title: Joi.string().min(4).max(20).required(),
+    title: Joi.string().min(2).required(),
     content: Joi.string().min(10).required(),
 });
 

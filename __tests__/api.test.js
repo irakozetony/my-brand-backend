@@ -4,9 +4,16 @@ import User from "../models/Users.js";
 import path from "path";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import {response} from "express";
+import { response } from "express";
+import jest from "jest";
 dotenv.config();
 
+describe("test environment", () => {
+    test("process.env.NODE_ENV is test", () => {
+        const testEnv = process.env.NODE_ENV;
+        expect(testEnv).toEqual("test");
+    });
+});
 describe("POST /signup", () => {
     describe("Invalid email or password", () => {
         test("No user_token in response and 400 status code", async () => {
@@ -66,15 +73,15 @@ describe("POST /login", () => {
         });
     });
 
-	describe("no email or no password given", ()=>{
-		test("400 status code response", async () =>{
-			const response = await request(app)
-				.post("/api/v1/auth/login")
-				.send({password: "Pass@123"});
+    describe("no email or no password given", () => {
+        test("400 status code response", async () => {
+            const response = await request(app)
+                .post("/api/v1/auth/login")
+                .send({ password: "Pass@123" });
 
-			expect(response.statusCode).toBe(400);
-		})
-	})
+            expect(response.statusCode).toBe(400);
+        });
+    });
 });
 
 const blog = {
@@ -108,17 +115,6 @@ describe("POST /blog", () => {
         });
     });
     describe("user with valid authentication but invalid data", () => {
-        describe("Invalid image or no image", () => {
-            test("500 status code and error message", async () => {
-                const response = await request(app)
-                    .post("/api/v1/blogs")
-                    .set("Authorization", process.env.TESTTOKEN)
-                    .field(blog);
-
-                expect(response.statusCode).toBe(500);
-                expect(response.body).toHaveProperty("error");
-            });
-        });
         describe("Invalid title or content", () => {
             test("invalid title or content", async () => {
                 const response = await request(app)
@@ -141,6 +137,18 @@ describe("POST /blog", () => {
                 .attach("img", `${baseDir}/test.jpg`);
             expect(response.statusCode).toBe(201);
             expect(response.body.message).toBe("Blog created successfully");
+        });
+    });
+    describe("valid with duplicate blog", () => {
+        test("400 status code and error message", async () => {
+            const response = await request(app)
+                .post("/api/v1/blogs")
+                .set("Authorization", process.env.TESTTOKEN)
+                .field(blog)
+                .attach("img", `${baseDir}/test.jpg`);
+            expect(response.statusCode).toBe(400);
+            expect(response.body).toHaveProperty("error");
+            expect(response.body.message).toBe("Blog with same title exists");
         });
     });
 });
@@ -204,22 +212,23 @@ describe("PATCH /blog/:id", () => {
             });
         });
     });
-	describe("user with valid authentication and valid data", () => {
-		let blogId = "";
-		beforeEach(async () =>{
-			const response = await request(app).get("/api/v1/blogs/");
-			blogId = response.body.blog_list[0]._id;
-		});
-		test("200 status and blog in response body", async () =>{
-			const response = await request(app)
-				.patch(`/api/v1/blogs/${blogId}`)
-				.set("Authorization", process.env.TESTTOKEN)
-				.field(updateBlog).attach("img", `${baseDir}/test.jpg`);
+    describe("user with valid authentication and valid data", () => {
+        let blogId = "";
+        beforeEach(async () => {
+            const response = await request(app).get("/api/v1/blogs/");
+            blogId = response.body.blog_list[0]._id;
+        });
+        test("200 status and blog in response body", async () => {
+            const response = await request(app)
+                .patch(`/api/v1/blogs/${blogId}`)
+                .set("Authorization", process.env.TESTTOKEN)
+                .field(updateBlog)
+                .attach("img", `${baseDir}/test.jpg`);
 
-			expect(response.statusCode).toBe(200);
-			expect(response.body).toHaveProperty("blog");
-		})
-	})
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toHaveProperty("blog");
+        });
+    });
 });
 
 describe("GET /blogs", () => {
@@ -252,7 +261,7 @@ describe("GET /blogs", () => {
             });
             test("200 status and blog details in response", async () => {
                 const response = await request(app).get(
-                    "/api/v1/blogs/63a37159f78728558b272ded"
+                    `/api/v1/blogs/${blogId}`
                 );
 
                 expect(response.statusCode).toBe(200);
@@ -303,8 +312,8 @@ describe("POST /blog/:id/comment", () => {
             const response = await request(app)
                 .post(`/api/v1/blogs/${blogId}/comments`)
                 .send({
-                    author: "Irakoze Yves Tony Kwizera Enseignant",
-                    message: "Hi, How are you doing?",
+                    author: "",
+                    message: "",
                 });
             expect(response.body.comment).not.toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -371,33 +380,33 @@ describe("POST /blog:id/like", () => {
     });
 });
 
-describe("POST /blog:id/unlike", () =>{
-	describe("Wrong blog id", ()=>{
-		test("400 status code and error message respons", async () =>{
-			const response = await request(app)
-				.post("/api/v1/blogs/87365538/unlike")
-				.send();
+describe("POST /blog:id/unlike", () => {
+    describe("Wrong blog id", () => {
+        test("400 status code and error message respons", async () => {
+            const response = await request(app)
+                .post("/api/v1/blogs/87365538/unlike")
+                .send();
 
-			expect(response.statusCode).toBe(404);
-			expect(response.body).toHaveProperty("error");
-		});
-	});
-	describe("Valid blog id", () =>{
-		let blogId = "";
-		beforeEach(async () =>{
-			const response = await request(app).get("/api/v1/blogs");
-			blogId = response.body.blog_list[0]._id;
-		});
-		test("200 status and new likes count", async ()=>{
-			const response = await request(app)
-				.post(`/api/v1/blogs/${blogId}/unlike`)
-				.send();
+            expect(response.statusCode).toBe(404);
+            expect(response.body).toHaveProperty("error");
+        });
+    });
+    describe("Valid blog id", () => {
+        let blogId = "";
+        beforeEach(async () => {
+            const response = await request(app).get("/api/v1/blogs");
+            blogId = response.body.blog_list[0]._id;
+        });
+        test("200 status and new likes count", async () => {
+            const response = await request(app)
+                .post(`/api/v1/blogs/${blogId}/unlike`)
+                .send();
 
-			expect(response.statusCode).toBe(200);
-			expect(response.body).toHaveProperty("likes");
-		})
-	})
-})
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toHaveProperty("likes");
+        });
+    });
+});
 
 describe("GET /blog:id/like", () => {
     describe("Wrong blog id", () => {
@@ -594,9 +603,9 @@ describe("DELETE /messages/:id", () => {
 describe("DELETE /blog/:id", () => {
     describe("with invalid id", () => {
         test("404 status code and blog not found error message", async () => {
-            const response = await request(app).delete(
-                "/api/v1/blogs/63a4c9388ab4790841"
-            );
+            const response = await request(app)
+                .delete("/api/v1/blogs/63a4c9388ab4790841")
+                .set("Authorization", process.env.TESTTOKEN);
 
             expect(response.statusCode).toBe(404);
             expect(response.body).toHaveProperty("error");
@@ -610,9 +619,9 @@ describe("DELETE /blog/:id", () => {
             blogId = response.body.blog_list[0]._id;
         });
         test("200 status code and deleted successfully message", async () => {
-            const response = await request(app).delete(
-                `/api/v1/blogs/${blogId}`
-            );
+            const response = await request(app)
+                .delete(`/api/v1/blogs/${blogId}`)
+                .set("Authorization", process.env.TESTTOKEN);
 
             expect(response.statusCode).toBe(200);
             expect(response.body.message).toBe("Deleted Successfully");

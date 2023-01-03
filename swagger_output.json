@@ -1,4 +1,0 @@
-"test": "NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --coverage && cat ./coverage/lcov.info | coveralls --forceExit",
-
-
-"test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage && cat ./coverage/lcov.info | coveralls",

@@ -1,8 +1,8 @@
 import Joi from "joi";
 
 const commentSchema = Joi.object({
-    author: Joi.string().min(2).max(8).required(),
-    message: Joi.string().min(2).required(),
+    author: Joi.string().min(2).required(),
+    message: Joi.string().min(1).required(),
 });
 
 const commentValidation = async (req, res, next) => {
